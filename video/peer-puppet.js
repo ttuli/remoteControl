@@ -1,5 +1,3 @@
-import {handleMouse,handleKey} from '../control/robotjs'
-
 async function getScreenStream() {
     return navigator.mediaDevices.getDisplayMedia({
         video: {
@@ -16,9 +14,9 @@ pc.ondatachannel = (e) => {
     e.channel.onmessage = (e) => {
         let {type,data} = JSON.parse(e.data)
         if (type==='mouse') {
-            handleMouse(data)
+            window.electronAPI.send('mouse',data)
         } else if (type==='key') {
-            handleKey(data)
+            window.electronAPI.send('key',data)
         }
     }
 }
@@ -71,5 +69,5 @@ window.electronAPI.ipcOn('offer', async (event, offer) => {
 });
 
 export default {
-    
+
 }

@@ -1,4 +1,5 @@
-import { mouse, straightTo, Button, keyboard, Key } from '@nut-tree/nut-js'
+const { mouse, straightTo, Button, keyboard, Key } = require('@nut-tree/nut-js')
+const {ipcMain} = require('electron')
 
 function handleMouse(data) {
   // data {clientX, clientY, screen: {width, height}, video: {width, height}}
@@ -156,8 +157,11 @@ function convertKeyCode(keyCode) {
   return keyMap[keyCode] || null
 }
 
-
-export default {
-  handleMouse,
-  handleKey
+module.exports = function() {
+  ipcMain.on('mouse', (event, data) => {
+    handleMouse(data)
+  })
+  ipcMain.on('key', (event, data) => {
+    handleKey(data)
+  })
 }
