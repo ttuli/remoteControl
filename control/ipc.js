@@ -20,6 +20,10 @@ module.exports = function() {
     })
 
     ipcMain.on('forward', (e, event,data) => {
+        if(event==='puppet-candidate' || event==='control-candidate'){
+            console.log('ipcMain.on:'+event)
+            console.dir(data)
+        }
         signal.send('forward', { event, data })
     })
     signal.addEventListener('offer',(e) => {
@@ -29,9 +33,9 @@ module.exports = function() {
         sendControlWindow('answer', e.detail)
     })
     signal.addEventListener('puppet-candidate',(e) => {
-        sendControlWindow('candidate', e.detail)
+        sendControlWindow('puppet-candidate', e.detail)
     })
     signal.addEventListener('control-candidate',(e) => {
-        sendMainWindow('candidate', e.detail)
+        sendMainWindow('control-candidate', e.detail)
     })
 }

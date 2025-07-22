@@ -1,37 +1,45 @@
-const pc = new window.RTCPeerConnection({})
+import {handleMouse,handleKey} from '../control/robotjs'
 
 async function getScreenStream() {
-    return new Promise((resolve, reject) => {
-        try {
-            const stream = navigator.mediaDevices.getDisplayMedia({
-                video: {
-                    width: { ideal: window.screen.width },
-                    height: { ideal: window.screen.height },
-                    frameRate: { ideal: 30 }
-                },
-                audio: false // 可以同时捕获系统音频
-            });
-            resolve(stream);
-        } catch (err) {
-            console.error('获取屏幕流失败:', err);
-        }
+    return navigator.mediaDevices.getDisplayMedia({
+        video: {
+            width: window.screen.width,
+            height: window.screen.height,
+            frameRate: { ideal: 40 },
+        },
+        audio: false
     });
 }
 
+const pc = new window.RTCPeerConnection({})
+pc.ondatachannel = (e) => {
+    e.channel.onmessage = (e) => {
+        let {type,data} = JSON.parse(e.data)
+        if (type==='mouse') {
+            handleMouse(data)
+        } else if (type==='key') {
+            handleKey(data)
+        }
+    }
+}
 pc.onicecandidate = function (e) {
     if (e.candidate) {
-        window.electronAPI.send('forward','puppet-candidate',e.candidate)
+        const candidateData = JSON.parse(JSON.stringify(e.candidate));
+        window.electronAPI.send('forward','puppet-candidate',candidateData)
     } else {
         // alert('not exec onicecandidate')
     }
 }
-window.electronAPI.ipcOn('candidate',(e, candidate) => {
+window.electronAPI.ipcOn('control-candidate',(e, candidate) => {
     addIceCandidate(candidate)
 })
 let candidates = []
 async function addIceCandidate(candidate) {
     if (candidate) {
         candidates.push(candidate)
+    } else {
+        alert('没有候选者')
+        return
     }
     if (pc.remoteDescription && pc.remoteDescription.type) {
         for (let i = 0; i < candidates.length; i++) {
@@ -44,7 +52,10 @@ async function addIceCandidate(candidate) {
 
 async function createAnswer(offer) {
     let screenStream = await getScreenStream();
-    pc.addStream(screenStream);
+    
+    screenStream.getTracks().forEach(track => {
+        pc.addTrack(track, screenStream);
+    });
 
     await pc.setRemoteDescription(offer);
     await pc.setLocalDescription(await pc.createAnswer());

@@ -36,7 +36,8 @@ wss.on('connection', function connection(ws, request) {
                 ws.sendRemote('be-controlled', code);
             }
         } else if (event === 'forward') {
-            console.log(data.event)
+            if(data.event==='control-candidate' || data.event ==='puppet-candidate')
+                console.dir(data)
             ws.sendRemote(data.event, data.data);
         }
     });

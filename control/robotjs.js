@@ -1,5 +1,4 @@
-const { ipcMain } = require('electron')
-const { mouse, straightTo, Button, keyboard, Key } = require('@nut-tree/nut-js')
+import { mouse, straightTo, Button, keyboard, Key } from '@nut-tree/nut-js'
 
 function handleMouse(data) {
   // data {clientX, clientY, screen: {width, height}, video: {width, height}}
@@ -158,20 +157,7 @@ function convertKeyCode(keyCode) {
 }
 
 
-module.exports = function() {
-  ipcMain.on('robot', (e, type, data) => {
-    try {
-      if (type === 'mouse') {
-        handleMouse(data)
-      } else if (type === 'mouseExtended') {
-        handleMouseExtended(data)
-      } else if (type === 'key') {
-        handleKey(data)
-      }
-    } catch (error) {
-      console.error('远程控制操作失败:', error)
-      // 可以通过 IPC 将错误发送回渲染进程
-      e.reply('robot-error', { type, error: error.message })
-    }
-  })
+export default {
+  handleMouse,
+  handleKey
 }

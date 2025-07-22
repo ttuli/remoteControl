@@ -10,7 +10,7 @@ function create() {
         webPreferences: {
             preload: path.join(__dirname, '../preload.js'),  // 使用绝对路径
             contextIsolation: true,
-            nodeIntegration: true,
+            nodeIntegration: false,
         }
     })
 
