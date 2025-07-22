@@ -22,7 +22,6 @@ function create() {
 
     win.loadFile(path.resolve(__dirname,'control.html'))
     win.webContents.openDevTools()
-    require('../control/robotjs.js')()
 }
 
 function send(channel,...args){

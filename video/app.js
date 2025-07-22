@@ -24,10 +24,6 @@ function handleMouseEvent(event) {
     const data = {
         clientX: event.clientX,
         clientY: event.clientY,
-        screen: {
-            width: window.screen.width * window.devicePixelRatio,
-            height: window.screen.height * window.devicePixelRatio
-        },
         video: {
             width: video.getBoundingClientRect().width,
             height: video.getBoundingClientRect().height

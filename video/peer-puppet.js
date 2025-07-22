@@ -13,6 +13,8 @@ const pc = new window.RTCPeerConnection({})
 pc.ondatachannel = (e) => {
     e.channel.onmessage = (e) => {
         let {type,data} = JSON.parse(e.data)
+        data.screen.width = window.screen.width * window.devicePixelRatio
+        data.screen.height = window.screen.height * window.devicePixelRatio
         if (type==='mouse') {
             window.electronAPI.send('mouse',data)
         } else if (type==='key') {

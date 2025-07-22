@@ -28,6 +28,7 @@ function create() {
     } else {
         // win.loadFile(path.resolve(__dirname,'../renderer/pages/main/index.html'))
     }
+    require('../control/robotjs.js')()
 }
 
 function send(channel,...args) {

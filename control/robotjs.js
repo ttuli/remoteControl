@@ -159,9 +159,11 @@ function convertKeyCode(keyCode) {
 
 module.exports = function() {
   ipcMain.on('mouse', (event, data) => {
+    console.log('Received mouse event:', data)
     handleMouse(data)
   })
   ipcMain.on('key', (event, data) => {
+    console.log('Received key event:', data)
     handleKey(data)
   })
 }
