@@ -1,0 +1,146 @@
+/* RC Remote Control 界面样式 */
+.container {
+    max-width: 80vw;
+    max-height: 95vh;
+    margin: auto;
+    padding: 5px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    text-align: center;
+  }
+  
+  /* RC Logo 样式 */
+  .rc-logo {
+    display: inline-block;
+    font-size: 48px;
+    font-weight: 800;
+    color: #2563eb;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+    letter-spacing: -2px;
+    text-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+  }
+  
+  .rc-subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 30px;
+    font-weight: 500;
+  }
+  
+  /* 控制码显示区域 */
+  .control-code {
+    background: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    font-size: 16px;
+    color: #475569;
+  }
+  
+  .code-label {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+  
+  .code-value {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    letter-spacing: 1px;
+  }
+  
+  /* 输入区域 */
+  .input-section {
+    margin-bottom: 25px;
+  }
+  
+  .input-label {
+    display: block;
+    font-size: 14px;
+    color: #374151;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  
+  .remote-code-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    letter-spacing: 1px;
+    text-align: center;
+    transition: all 0.3s ease;
+    background: #ffffff;
+    box-sizing: border-box;
+  }
+  
+  .remote-code-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background: #fefefe;
+  }
+  
+  .remote-code-input::placeholder {
+    color: #9ca3af;
+    font-style: italic;
+  }
+  
+  /* 确认按钮 */
+  .confirm-button {
+    width: 100%;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  }
+  
+  .confirm-button:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+  }
+  
+  .confirm-button:active {
+    transform: translateY(0);
+  }
+  
+  /* 控制状态显示 */
+  .control-status {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  }
+  
+  /* 响应式设计 */
+  @media (max-width: 480px) {
+    .container {
+      margin: 20px;
+      padding: 20px;
+    }
+    
+    .rc-logo {
+      font-size: 40px;
+    }
+  }
