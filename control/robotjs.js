@@ -5,7 +5,6 @@ function handleMouse(data) {
   // data {clientX, clientY, screen: {width, height}, video: {width, height}}
   try {
     const { clientX, clientY, screen, video , type, button} = data
-    console.log("处理鼠标事件:", { clientX, clientY, screen, video })
     const x = Math.round(screen.width * clientX / video.width)
     const y = Math.round(screen.height * clientY / video.height)
     
@@ -45,10 +44,18 @@ function handleMouse(data) {
         case 'scroll':
           const { deltaX = 0, deltaY = 0 } = data
           if (deltaY !== 0) {
-            mouse.scrollDown(Math.abs(deltaY))
+            if (deltaY > 0) {
+              mouse.scrollDown(Math.abs(deltaY))
+            } else {
+              mouse.scrollUp(Math.abs(deltaY))
+            }
           }
           if (deltaX !== 0) {
-            mouse.scrollLeft(Math.abs(deltaX))
+            if (deltaX > 0) {
+              mouse.scrollRight(Math.abs(deltaX))
+            } else {
+              mouse.scrollLeft(Math.abs(deltaX))
+            }
           }
           break
         default:
@@ -80,6 +87,7 @@ function handleKey(data) {
         keyboard.releaseKey(...modifiers, key)
       } else {
         // 单独按键
+        console.log('Pressing key:', key)
         keyboard.pressKey(key)
         keyboard.releaseKey(key)
       }
@@ -159,11 +167,9 @@ function convertKeyCode(keyCode) {
 
 module.exports = function() {
   ipcMain.on('mouse', (event, data) => {
-    console.log('Received mouse event:', data)
     handleMouse(data)
   })
   ipcMain.on('key', (event, data) => {
-    console.log('Received key event:', data)
     handleKey(data)
   })
 }

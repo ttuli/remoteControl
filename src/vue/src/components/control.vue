@@ -18,6 +18,8 @@ const handleControlState = (e,name,type) => {
         text='正在远程控制'+name
     } else if(type===2) {
         text='被'+name+'控制中'
+    } else if(type===0) {
+      remoteCode.value=''
     }
     controlText.value=text
 }

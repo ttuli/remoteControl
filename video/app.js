@@ -88,7 +88,10 @@ window.onwheel = handleMouseEvent;
 
 const pc = new window.RTCPeerConnection({})
 const dc = pc.createDataChannel('robotchannel',{reliable: false})//reliable:false:允许一定丢失
-
+pc.onconnectionstatechange = function () {
+    if(pc.connectionState=== 'disconnected')
+        window.electronAPI.send('control-state-change','0',0)
+}
 
 async function createOffer() {
     const offer = await pc.createOffer({

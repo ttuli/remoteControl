@@ -13,8 +13,10 @@ const pc = new window.RTCPeerConnection({})
 pc.ondatachannel = (e) => {
     e.channel.onmessage = (e) => {
         let {type,data} = JSON.parse(e.data)
-        data.screen.width = window.screen.width * window.devicePixelRatio
-        data.screen.height = window.screen.height * window.devicePixelRatio
+        data.screen = {
+            width: window.screen.width * window.devicePixelRatio,
+            height: window.screen.height * window.devicePixelRatio
+        }
         if (type==='mouse') {
             window.electronAPI.send('mouse',data)
         } else if (type==='key') {
@@ -29,6 +31,10 @@ pc.onicecandidate = function (e) {
     } else {
         // alert('not exec onicecandidate')
     }
+}
+pc.onconnectionstatechange = function () {
+    if(pc.connectionState=== 'disconnected')
+        window.electronAPI.send('control-state-change','0',0)
 }
 window.electronAPI.ipcOn('control-candidate',(e, candidate) => {
     addIceCandidate(candidate)

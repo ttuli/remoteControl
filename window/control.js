@@ -1,4 +1,4 @@
-const {BrowserWindow,desktopCapturer, session} = require('electron')
+const {BrowserWindow,desktopCapturer, session,ipcMain} = require('electron')
 const path = require('path')
 
 let win 
@@ -24,11 +24,19 @@ function create() {
     win.webContents.openDevTools()
 }
 
+function close() {
+    if (win) {
+        win.close()
+        win = null
+    }
+}
+
 function send(channel,...args){
     win.webContents.send(channel,...args)
 }
 
 module.exports = {
     create,
-    send
+    send,
+    close
 }
