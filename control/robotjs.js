@@ -58,6 +58,9 @@ function handleMouse(data) {
             }
           }
           break
+        case 'contextmenu':
+          mouse.click(Button.RIGHT)
+          break
         default:
           break
       }

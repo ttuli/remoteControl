@@ -68,6 +68,14 @@ function handleMouseEvent(event) {
         sendData(type, data);
         return;
     }
+
+    if (event.type === 'contextmenu') {
+        event.preventDefault();
+        data.type = 'contextmenu';
+        data.button = getMouseButton(event.button);
+        sendData(type, data);
+        return;
+    }
 }
 function getMouseButton(buttonCode) {
     switch (buttonCode) {
@@ -85,6 +93,7 @@ function sendData(type, data) {
 window.onclick = handleMouseEvent;
 window.ondblclick = handleMouseEvent;
 window.onwheel = handleMouseEvent;
+window.oncontextmenu =handleMouseEvent;
 
 const pc = new window.RTCPeerConnection({})
 const dc = pc.createDataChannel('robotchannel',{reliable: false})//reliable:false:允许一定丢失

@@ -1,4 +1,4 @@
-const {BrowserWindow,desktopCapturer, session,ipcMain} = require('electron')
+const {BrowserWindow,desktopCapturer, session} = require('electron')
 const path = require('path')
 
 let win 
@@ -25,6 +25,7 @@ function create() {
         win.on('close', closeCallback)
     }
     win.loadFile(path.resolve(__dirname,'control.html'))
+    win.webContents.openDevTools()
 }
 
 function close() {
