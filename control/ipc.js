@@ -1,6 +1,8 @@
 const { ipcMain } =require('electron')
 const {send:sendMainWindow} = require('../window/main.js')
-const {create:createControl , send:sendControlWindow , close:closeControlWindow} = require('../window/control.js')
+const {create:createControl , send:sendControlWindow , close:closeControlWindow ,
+    onclose:controlOnClose
+} = require('../window/control.js')
 const signal = require('./signal.js')
 
 module.exports = function() {
@@ -41,5 +43,8 @@ module.exports = function() {
     })
     signal.addEventListener('control-candidate',(e) => {
         sendMainWindow('control-candidate', e.detail)
+    })
+    controlOnClose(() => {
+        sendMainWindow('control-state-change','0',0)
     })
 }

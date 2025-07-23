@@ -2,6 +2,7 @@ const {BrowserWindow,desktopCapturer, session,ipcMain} = require('electron')
 const path = require('path')
 
 let win 
+let closeCallback = null
 
 function create() {
     win = new BrowserWindow({
@@ -20,8 +21,10 @@ function create() {
         })
     })
 
+    if (closeCallback) {
+        win.on('close', closeCallback)
+    }
     win.loadFile(path.resolve(__dirname,'control.html'))
-    win.webContents.openDevTools()
 }
 
 function close() {
@@ -29,6 +32,9 @@ function close() {
         win.close()
         win = null
     }
+}
+function onclose(callback) {
+    closeCallback = callback
 }
 
 function send(channel,...args){
@@ -38,5 +44,6 @@ function send(channel,...args){
 module.exports = {
     create,
     send,
-    close
+    close,
+    onclose
 }
